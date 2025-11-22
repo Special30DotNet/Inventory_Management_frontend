@@ -29,33 +29,21 @@
       </thead>
 
       <tbody class="divide-y divide-gray-200">
-        <tr class="hover:bg-gray-50">
-          <td class="py-3 px-4 font-medium text-gray-900">AAP50L</td>
-          <td class="py-3 px-4">Chase & Co.</td>
-          <td class="py-3 px-4">CAC</td>
-          <td class="py-3 px-4 text-green-600">+$4.37</td>
-          <td class="py-3 px-4">$3,509.00</td>
-          <td class="py-3 px-4">12.00</td>
-          <td class="py-3 px-4 font-medium">$4,397.00</td>
-          <td class="py-3 px-4">
-            <a href="#" class="text-indigo-600 font-medium hover:underline">Edit</a>  /
-            <a href="#" class="text-indigo-600 font-medium hover:underline">Delete</a>
-          </td>
-        </tr>
-
-        <tr class="hover:bg-gray-50">
-          <td class="py-3 px-4 font-medium text-gray-900">O2KMND</td>
-          <td class="py-3 px-4">Amazon.com Inc.</td>
-          <td class="py-3 px-4">AMZN</td>
-          <td class="py-3 px-4 text-green-600">+$5.92</td>
-          <td class="py-3 px-4">$2,900.00</td>
-          <td class="py-3 px-4">8.80</td>
-          <td class="py-3 px-4 font-medium">$3,509.00</td>
-          <td class="py-3 px-4">
-            <a href="#" class="text-indigo-600 font-medium hover:underline">Edit</a>
-          </td>
-        </tr>
-
+        @for (product of allProductList();track product.id) {
+            <tr class="hover:bg-gray-50">
+              <td class="py-3 px-4 font-medium text-gray-900">{{product.id}}</td>
+              <td class="py-3 px-4">{{product.product_name}}</td>
+              <td class="py-3 px-4">{{product.product_decription}}</td>
+              <td class="py-3 px-4">{{product.purchase_price}}</td>
+              <td class="py-3 px-4">{{product.product_selling_price}}</td>
+              <td class="py-3 px-4">{{product.product_stock_quantity}}</td>
+              <td class="py-3 px-4 font-medium">{{product.status}}</td>
+              <td class="py-3 px-4">
+                <a href="#" class="text-indigo-600 font-medium hover:underline">Edit</a>  /
+                <a href="#" class="text-indigo-600 font-medium hover:underline">Delete</a>
+              </td>
+            </tr>
+        }
         <!-- Add more rows as needed -->
       </tbody>
     </table>
