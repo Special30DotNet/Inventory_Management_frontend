@@ -1,10 +1,7 @@
 <div class="bg-white p-6">
   <div class="flex items-center justify-between mb-6">
     <div>
-      <h2 class="text-2xl font-semibold text-gray-900">Inventry ledger</h2>
-      <!-- <p class="mt-1 text-gray-500">
-        A table of placeholder stock market data that does not make any sense.
-      </p> -->
+      <h2 class="text-2xl font-semibold text-blue-900">Inventry ledger</h2>
     </div>
     <app-admin-add-product></app-admin-add-product>
   </div>
@@ -35,8 +32,8 @@
               <td class="py-3 px-4">{{product.product_stock_quantity}}</td>
               <td class="py-3 px-4 font-medium">{{product.status}}</td>
               <td class="py-3 px-4">
-                <a href="#" class="text-indigo-600 font-medium hover:underline">Edit</a>  /
-                <a href="#" class="text-indigo-600 font-medium hover:underline">Delete</a>
+                <a class="text-indigo-600 font-medium hover:underline" style="cursor: pointer;">Edit</a>   |  
+                <a class="text-indigo-600 font-medium hover:underline" style="cursor: pointer;" (click)="deleteProduct(product.id)"> Delete </a>
               </td>
             </tr>
         }
@@ -45,5 +42,4 @@
     </table>
   </div>
 </div>
-
 
