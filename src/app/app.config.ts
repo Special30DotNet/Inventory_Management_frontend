@@ -1,10 +1,12 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
-import { provideHttpClient } from '@angular/common/http';
-import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { provideToastr } from 'ngx-toastr';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { loadingInterceptor } from '../interceptors/interceptors/loading.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,6 +19,19 @@ export const appConfig: ApplicationConfig = {
       timeOut: 5000,
       positionClass: 'toast-bottom-right',
       preventDuplicates: true 
-    })
+    }),
+    BrowserAnimationsModule,
+    NgxSpinnerModule,
+    importProvidersFrom(
+      NgxSpinnerModule.forRoot({
+        // Optional: Set a default spinner type globally
+        type: 'ball-scale-multiple',
+      })
+    ),
+    provideHttpClient(
+      withInterceptors([
+        loadingInterceptor
+      ])
+    ),
   ]
 };
