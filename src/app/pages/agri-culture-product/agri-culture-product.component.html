@@ -1,0 +1,105 @@
+<div class="container mt-4">
+    <button class="btn btn-primary mb-3" (click)="toggleForm()">
+        Show Product Form
+    </button>
+
+    <div *ngIf="showForm" class="floating-form">
+
+        <h2>Add Agriculture Product</h2>
+
+        <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <label>Product Name</label>
+                    <input type="text" formControlName="product_name" class="form-control">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Purchase Price</label>
+                    <input type="number" formControlName="purchase_price" class="form-control">
+                </div>
+
+                <div class="col-md-12 mb-3">
+                    <label>Description</label>
+                    <textarea formControlName="product_decription" class="form-control"></textarea>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Selling Price</label>
+                    <input type="number" formControlName="product_selling_price" class="form-control">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Stock Quantity</label>
+                    <input type="number" formControlName="product_stock_quantity" class="form-control">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Status</label>
+                    <select class="form-control" formControlName="status">
+                        <option value="Available">Available</option>
+                        <option value="Not Available">Not Available</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Created At</label>
+                    <input type="datetime-local" formControlName="created_at" class="form-control">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Created By</label>
+                    <input type="text" formControlName="created_by" class="form-control">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Modified At</label>
+                    <input type="datetime-local" formControlName="modified_at" class="form-control">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Modified By</label>
+                    <input type="text" formControlName="modified_by" class="form-control">
+                </div>
+
+            </div>
+            <button *ngIf="this.productForm?.get('id')?.value ==0" class="btn btn-primary" type="submit" [disabled]="productForm.invalid"> Add Product </button>
+            <button *ngIf="this.productForm?.get('id')?.value > 0"  class="btn btn-warning" type="button" (click)="OnUpdate()">Update Product</button>
+
+        </form>
+    </div>
+
+    <hr>
+
+    <h3>Product List</h3>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Selling Price</th>
+                <th>Stock</th>
+                <th>Status</th>
+                <th>Created At</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let p of productList; let i=index">
+                <td>{{ i+1 }}</td>
+                <td>{{ p.product_name }}</td>
+                <td>{{ p.product_selling_price }}</td>
+                <td>{{ p.product_stock_quantity }}</td>
+                <td>{{ p.status }}</td>
+                <td>{{ p.created_at | date:'short' }}</td>
+                <button class="btn btn-success" (click)="OnEdit(p)">Edit</button>
+                <button class="btn btn-danger" (click)="onDelete(p.id)">Delete</button>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
