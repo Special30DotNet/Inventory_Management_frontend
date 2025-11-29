@@ -6,43 +6,134 @@
                     <img src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600" alt=""
                         class="h-8 w-auto" />
                 </a>
-                <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-                    <!-- <a href="shared/login" class="text-sm/6 font-semibold text-red-900">Admin Login <span aria-hidden="true">&rarr;</span></a> -->
-                    <a routerLink="/admin" class="text-sm/6 font-semibold text-red-900">Admin Login <span aria-hidden="true">&rarr;</span></a>
-                </div>
+<div class="hidden lg:flex lg:flex-1 lg:justify-end">
+  <!-- Button -->
+  <button command="show-modal" commandfor="dialog" class="text-sm/6 font-semibold text-red-900 cursor-pointer">
+    Admin Login
+  </button>
+</div>
+<!-- Modal -->
+ <dialog id="dialog" class="fixed inset-0 bg-transparent backdrop:bg-transparent">
+
+  <!-- Backdrop -->
+  <el-dialog-backdrop class="fixed inset-0 bg-gray-500/75 transition-opacity 
+             data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out 
+             data-leave:duration-200 data-leave:ease-in">
+  </el-dialog-backdrop>
+
+  <!-- Center Container -->
+  <div tabindex="0" class="flex min-h-full items-center justify-center p-4 focus:outline-none">
+    <!-- Modal Panel -->
+    <el-dialog-panel
+      class="relative transform overflow-hidden rounded-lg bg-white shadow-xl 
+             transition-all w-full max-w-md mx-auto 
+             data-closed:translate-y-4 data-closed:opacity-0
+             data-enter:duration-300 data-enter:ease-out
+             data-leave:duration-200 data-leave:ease-in">
+
+      <!-- Modal Body -->
+      <div class="bg-white px-6 py-8">
+        <!-- Logo + Heading -->
+        <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+          <img src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
+            alt="Your Company" class="mx-auto h-10 w-auto" />
+          <h2 class="mt-6 text-center text-2xl font-bold tracking-tight text-gray-700">
+            Sign in to your account
+          </h2>
+        </div>
+
+        <!-- Form -->
+        <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-sm">
+          <form [formGroup]="loginForm" (ngSubmit)="onClickLogin()" class="space-y-6">
+            <!-- User Name -->
+            <div>
+              <label for="userName" class="block text-sm font-medium text-gray-700" name="userName" formControlName="userName">User name</label>
+              <div class="mt-2">
+                <input id="userName" type="text" name="userName" required autocomplete="userName"
+                  class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-indigo-600 sm:text-sm" />
+              </div>
             </div>
+        
+            <!-- Password -->
+            <div>
+              <div class="flex items-center justify-between">
+                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <div class="text-sm">
+                  <a href="#" class="font-semibold text-indigo-400 hover:text-indigo-300">
+                    Forgot password?
+                  </a>
+                </div>
+              </div>
+              <div class="mt-2">
+                <input id="password" type="password" name="password" formControlName="password" required autocomplete="current-password" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-indigo-600 sm:text-sm" />
+              </div>
+            </div>
+            <!-- Submit -->
+            <div>
+              <button type="submit"
+                class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
+                Sign in </button>
+            </div>
+          </form>
+          <!-- Footer Link -->
+          <p class="mt-8 text-center text-sm text-gray-400">
+            Not a member?
+            <a href="#" class="font-semibold text-indigo-400 hover:text-indigo-300">
+              Start a 14 day free trial
+            </a>
+          </p>
+        </div>
+        </div>
+
+      <!-- Modal Footer -->
+<!-- Modal Footer -->
+<div class="bg-gray-50 px-6 py-3 flex justify-end">
+  <button command="close" commandfor="dialog" type="button" style="cursor: pointer;"
+    class="px-4 py-2 rounded-lg border bg-gray-100 hover:bg-gray-200">
+    Close
+  </button>
+</div>
+    </el-dialog-panel>
+
+  </div>
+</dialog>
+
+
+</div>
+
+            <!-- </div> -->
         </nav>
     <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
     <h2 class="text-2xl font-bold tracking-tight text-gray-900">Customers also purchased</h2>
 
   <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
     @for( product of allProductList(); track product.id) {
-<div class="group relative">
-    <img src="{{product.image_url}}" alt="{{product.product_name}}"
-        class="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80" />  
-    
-    <div class="mt-4 flex justify-between">
-        
+    <div class="group relative">
+      <img src="{{product.image_url}}" alt="{{product.product_name}}"
+        class="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80" />
+      <div class="mt-4 flex justify-between">
         <div>
-            <h3 class="text-sm text-gray-700">
-                <a href="#">
-                    <span aria-hidden="true" class="absolute inset-0"></span>
-                    {{product.product_name}}
-                </a>
-            </h3>
-            <p class="mt-1 text-sm text-gray-500">{{product.product_decription}}</p>
+          <h3 class="text-sm text-gray-700">
+            <a href="#">
+              <span aria-hidden="true" class="absolute inset-0"></span>
+              {{product.product_name}}
+            </a>
+          </h3>
+          <p class="mt-1 text-sm text-gray-500">{{product.product_decription}}</p>
         </div>
-        
-        <div class="flex flex-col items-end"> 
-            <p class="text-sm font-medium text-gray-900">{{product.product_selling_price | currency:'INR'}}</p>
-            <p class="mt-1 text-sm text-gray-500">{{product.status}}</p> 
-            <button class="mt-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-3 rounded text-xs transition-colors duration-200" (click)="addToCart(product)">
-              Buy Now
-            </button>
+  
+        <div class="flex flex-col items-end">
+          <p class="text-sm font-medium text-gray-900">{{product.product_selling_price | currency:'INR'}}</p>
+          <p class="mt-1 text-sm text-gray-500">{{product.status}}</p>
+          <button
+            class="mt-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-3 rounded text-xs transition-colors duration-200"
+            (click)="addToCart(product)">
+            Buy Now
+          </button>
         </div>
-        
+  
+      </div>
     </div>
-</div>
     }
   </div>
   </div>
