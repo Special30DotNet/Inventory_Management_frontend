@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AdminDashboardComponent } from "../admin-dashboard/admin-dashboard.component";
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-admin-header',
@@ -12,4 +12,9 @@ import { RouterModule } from '@angular/router';
 })
 export class AdminHeaderComponent {
 
+  constructor (private _router:Router){}
+  logout() {
+    localStorage.removeItem("token");
+    this._router.navigate(['/']);
+  }
 }

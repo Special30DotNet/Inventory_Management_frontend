@@ -8,9 +8,15 @@
                 </a>
 <div class="hidden lg:flex lg:flex-1 lg:justify-end">
   <!-- Button -->
-  <button command="show-modal" commandfor="dialog" class="text-sm/6 font-semibold text-red-900 cursor-pointer">
-    Admin Login
-  </button>
+  @if (isLoginButton()) {
+    <button command="show-modal" commandfor="dialog" class="text-sm/6 font-semibold text-red-900 cursor-pointer">
+      Admin Login
+    </button>
+  } @else {
+      <button (click)="gotoAdminDashboard()" class="text-sm/6 font-semibold text-red-900 cursor-pointer">
+       Admin dashboard
+    </button>
+  }
 </div>
 <!-- Modal -->
  <dialog id="dialog" class="fixed inset-0 bg-transparent backdrop:bg-transparent">

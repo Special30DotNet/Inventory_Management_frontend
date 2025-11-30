@@ -3,7 +3,7 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, signal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { ProductService } from '../../../services/product.service';
 import { ɵInternalFormsSharedModule, ReactiveFormsModule, FormBuilder } from "@angular/forms";
-import { UtilityService } from '../../../services/utility.service';
+import { AuthService } from '../../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-products-display',
@@ -21,13 +21,13 @@ import { ToastrService } from 'ngx-toastr';
 export class ProductsDisplayComponent {
   allProductList = signal<any>([]);
   loginForm: any;
+  isLoginButton = signal<boolean>(true);
   constructor(
     private _productService: ProductService,
     private _fb: FormBuilder,
-    private _loginService: UtilityService,
+    private _loginService: AuthService,
     private _router: Router,
-    private _toaster: ToastrService
-  ) {
+    private _toaster: ToastrService ) {
     this.loginForm = this._fb.group({
       userName: [''],
       password: [''],
@@ -35,6 +35,12 @@ export class ProductsDisplayComponent {
   }
   ngOnInit() {
     this.allProductList = this._productService.SubscribeGetProductList();
+    const isTokenPresent = localStorage.getItem("token");
+    if(isTokenPresent) {
+      this.isLoginButton.set(false);
+    } else {
+      this.isLoginButton.set(true);
+    }
   }
 
   addToCart(proudct: any) {}
@@ -43,14 +49,20 @@ export class ProductsDisplayComponent {
     const reqBody = loginForm.value;
     this._loginService.loginAdmin(reqBody).subscribe({
       next: (response: any) => {
-        if (response?.isUserVerified) {
+        if (response?.token) {
+          localStorage.setItem("token",response?.token);
           this._router.navigate(['admin']);
           this._toaster.success(response?.message);
+          this.isLoginButton.set(false);
         }
       },
       error:(err:any)=> {
         this._toaster.error(err);
       },
     });
+  }
+
+  gotoAdminDashboard() {
+    this._router.navigate(['admin']);
   }
 }

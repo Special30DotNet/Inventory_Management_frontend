@@ -1,5 +1,4 @@
 import { Component, inject, Input, signal } from '@angular/core';
-import { UtilityService } from '../../../services/utility.service';
 import { NgxSpinnerService, NgxSpinnerComponent } from 'ngx-spinner';
 
 @Component({
