@@ -1,0 +1,71 @@
+<div class="container-fluid mt-4">
+
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="mb-0">Products</h3>
+
+    <button class="btn btn-primary" routerLink="/add">
+      <i class="bi bi-plus-circle"></i> Add Product
+    </button>
+  </div>
+
+  <div class="card shadow-sm"> 
+    <div class="card-body p-0"> 
+
+      <table class="table table-striped table-hover table-bordered w-100 mb-0" *ngIf="products?.length"> 
+
+        <thead class="table-dark">
+          <tr>
+            <th style="width: 70px;">#</th>
+            <th>Name</th>
+            <th style="width: 150px;">Purchase</th>
+            <th style="width: 150px;">Selling</th>
+            <th style="width: 120px;">Stock</th>
+            <th style="width: 120px;">Status</th>
+            <th style="width: 170px; text-align:center;">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let p of products; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ p.product_name }}</td>
+            <td>₹ {{ p.purchase_price }}</td>
+            <td>₹ {{ p.product_selling_price }}</td>
+            <td>{{ p.product_stock_quantity }}</td>
+
+            <td>
+              <span class="badge"
+                    [ngClass]="{
+                      'bg-success': p.status === 'Active',
+                      'bg-danger': p.status === 'Inactive'
+                    }">
+                {{ p.status }}
+              </span>
+            </td>
+
+            <!-- ACTION BUTTONS -->
+            <td class="text-center">
+              <button class="btn btn-sm btn-warning me-2" (click)="editProduct(p.id)">
+
+                <i class="bi bi-pencil-square"></i>
+              </button>
+
+              <!-- FIXED DELETE BUTTON -->
+              <button class="btn btn-sm btn-danger" (click)="deleteProduct(p.id)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
+
+          </tr>
+        </tbody>
+
+      </table>
+
+      <div class="p-3 text-center text-muted" *ngIf="!products || products.length === 0">
+        No products found.
+      </div>
+
+    </div>
+  </div>
+
+</div>
