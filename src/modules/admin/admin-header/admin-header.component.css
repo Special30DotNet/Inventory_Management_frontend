@@ -1,0 +1,107 @@
+/* ---------- Form Styling ---------- */
+form {
+    background: #ffffff;
+    padding: 20px 25px;
+    border-radius: 8px;
+    border: 1px solid #dcdcdc;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 25px;
+}
+form label {
+    font-weight: 600;
+    margin-bottom: 5px;
+    display: block;
+}
+
+form input, 
+form select {
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 4px;
+    border: 1px solid #bdbdbd;
+    border-radius: 5px;
+    font-size: 15px;
+    background-color: #fefefe;
+}
+
+form input:focus, 
+form select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 4px rgba(0,123,255,0.4);
+}
+button {
+    background-color: #28a745;
+    border: none;
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 5px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+/* ---------- Table Styling ---------- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+table thead {
+    background: #007bff;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+table thead th {
+    padding: 12px;
+    border: 1px solid #e1e1e1;
+}
+
+table tbody td {
+    padding: 10px;
+    border: 1px solid #e1e1e1;
+}
+
+table tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+/* Action buttons */
+.btn-success {
+    background-color: #28a745;
+    border: none;
+    padding: 6px 14px;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+    padding: 6px 14px;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+/* Container for spacing */
+.row {
+    margin-top: 20px;
+}

@@ -1,0 +1,93 @@
+<!-- <p>This is the admin component UI</p> -->
+<div>
+    <form [formGroup]="ProductForm">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label>Product Name</label>
+                <input type="text" formControlName="product_name">
+
+            </div>
+            <div class="col-md-6 mb-3">
+                <label>Product Decription</label>
+                <input type="text" formControlName="product_decription">
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label>Selling Price</label>
+                <input type="number" formControlName="product_selling_price">
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label>Stock Quantity</label>
+                <input type="number" formControlName="product_stock_quantity" class="form-control">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label>Status</label>
+                <select formControlName="status">
+                    <option value="Available">Available</option>
+                    <option value="Not Available">Not Available</option>
+                </select>
+            </div>
+            <!-- 
+                   <div class="col-md-6 mb-3">
+                    <label>Created At</label>
+                    <input type="datetime-local" formControlName="created_at" class="form-control">
+                </div> -->
+
+            <!-- <div class="col-md-6 mb-3">
+                    <label>Created By</label>
+                    <input type="text" formControlName="created_by" class="form-control">
+                </div> -->
+            <!-- <div class="col-md-6 mb-3">
+                    <label>Modified At</label>
+                    <input type="datetime-local" formControlName="modified_at" class="form-control">
+                </div> -->
+
+            <!-- <div class="col-md-6 mb-3">
+                    <label>Modified By</label>
+                    <input type="text" formControlName="modified_by" class="form-control">
+                </div> -->
+        </div>
+
+
+        <button type="submit" (click)="onSubmit()">Add Product</button>
+        <br>
+        <button type="button" (click)="OnUpdate()">Update Product</button>
+
+    </form>
+</div>
+
+<div class="row">
+    <div class="col">
+        <h3>Product List</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>product description</th>
+                    <th>Selling Price</th>
+                    <th>Stock</th>
+                    <th>Status</th>
+                    <th>Created At</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (item of List; let i = $index; track item){
+                <tr>
+
+                    <td>{{i+1}}</td>
+                    <td>{{ item.product_name }}</td>
+                    <td>{{ item.product_decription }}</td>
+                    <td>{{ item.product_selling_price }}</td>
+                    <td>{{ item.product_stock_quantity }}</td>
+                    <td>{{ item.status }}</td>
+                    <td>{{ item.created_at }}</td>
+                    <button class="btn btn-success" (click)="OnEdit(item)">Edit</button>
+                    <button class="btn btn-danger" (click)="onDelete(item.id)">Delete</button>
+                </tr>}
+            </tbody>
+        </table>
+    </div>
+</div>
