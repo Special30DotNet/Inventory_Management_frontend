@@ -5,6 +5,11 @@
 .table th {
   font-weight: 600;
 }
+table.table td, 
+table.table th {
+    padding: 3px 10px !important;   /* Reduce cell padding */
+    vertical-align: middle !important;
+}
 
 .modal-content {
   border-radius: 12px;

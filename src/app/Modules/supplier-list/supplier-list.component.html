@@ -1,1 +1,255 @@
-<p>supplier-list works!</p>
+<div class="container py-4">
+
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">Supplier Management</h2>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSupplierModal">
+            + Add Supplier
+        </button>
+    </div>
+
+    <!-- COUNT CARDS -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card p-3 shadow-sm">
+                <h5>Total Suppliers</h5>
+                <h3 class="fw-bold">{{Counts.totalSupplier}}</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-3 shadow-sm">
+                <h5>Active</h5>
+                <h3 class="text-success fw-bold">{{Counts.totalActive}}</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card p-3 shadow-sm">
+                <h5>Inactive</h5>
+                <h3 class="text-danger fw-bold">{{Counts.totalInactive}}</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEARCH -->
+    <div class="mb-3">
+        <input type="text" class="form-control" placeholder="Search supplier..." [(ngModel)]="searchText"
+            (keyup)="OnSearch()">
+    </div>
+   
+
+    <!-- TABLE -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Contact Person</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>GST</th>
+                        <th>Address</th>
+                        <th>Status</th>
+                        <th width="150">Actions</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+
+                    <tr *ngFor="let obj of supplierList;let i = index">
+                        <td>{{i+1}}</td>
+                        <td>{{obj.supplier_name}}</td>
+                        <td>{{obj.contactPerson}}</td>
+                        <td>{{obj.phoneno}}</td>
+                        <td>{{obj.email}}</td>
+                        <td>{{obj.gstumber}}</td>
+                        <td>{{obj.address}}</td>
+
+                        <!-- <td>
+                            <span class="badge bg-success" [ngClass]="item.status === 'Active':">Active</span>
+                            <span class="badge bg-danger" *ngIf="item.status === 'Inactive'">Inactive</span>
+                        </td> -->
+                        <td>
+                            <span class="badge" [ngClass]="obj.status == 'Active' ? 'bg-success' : 'bg-danger'">
+                                {{obj.status}}
+                            </span>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-warning me-1">Edit</button>
+                            <button class="btn btn-sm btn-danger">Delete</button>
+                        </td>
+          
+                    </tr>
+                    <tr *ngIf="supplierList.length === 0">
+                        <td colspan="9" class="text-center">
+                            <div class="alert alert-warning mb-0">
+                                Data not found
+                            </div>
+                        </td>
+                    </tr>
+                
+                </tbody>
+                
+            </table>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- ADD SUPPLIER MODAL -->
+<div class="modal fade" id="addSupplierModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Add Supplier</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <form [formGroup]="supplierForm" (ngSubmit)="onSaveSupplier()">
+
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+                            <label>Supplier Name</label>
+                            <input type="text" class="form-control" formControlName="supplier_name">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Contact Person</label>
+                            <input type="text" class="form-control" formControlName="contactPerson">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Phone</label>
+                            <input type="text" class="form-control" formControlName="phoneno">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Email</label>
+                            <input type="email" class="form-control" formControlName="email">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>GST Number</label>
+                            <input type="text" class="form-control" formControlName="gstumber">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Status</label>
+                            <select class="form-select" formControlName="status">
+                                <option value="Active">Active</option>
+                                <option value="InActive">Inactive</option>
+                            </select>
+                        </div>
+
+                        <div class="col-12">
+                            <label>Address</label>
+                            <textarea class="form-control" rows="2" formControlName="address"></textarea>
+                        </div>
+
+                        <div class="col-12">
+                            <label>Note</label>
+                            <textarea class="form-control" rows="2" formControlName="note"></textarea>
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button class="btn btn-primary" (click)="onSaveSupplier()">Save</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<!-- EDIT SUPPLIER MODAL -->
+<div class="modal fade" id="editSupplierModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5>Edit Supplier</h5>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <form>
+
+                    <div class="row g-3">
+
+                        <!-- Same fields as add form -->
+                        <div class="col-md-6">
+                            <label>Supplier Name</label>
+                            <input class="form-control">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Contact Person</label>
+                            <input class="form-control">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Phone</label>
+                            <input class="form-control">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Email</label>
+                            <input class="form-control">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>GST</label>
+                            <input class="form-control">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>Status</label>
+                            <tr *ngFor="let sup of supplierList">
+                                <td>
+                                    <span class="badge bg-success" *ngIf="sup.status === 'Active'">Active</span>
+                                    <span class="badge bg-danger" *ngIf="sup.status === 'Inactive'">Inactive</span>
+                                </td>
+                            </tr>
+
+                        </div>
+
+                        <div class="col-12">
+                            <label>Address</label>
+                            <textarea class="form-control"></textarea>
+                        </div>
+
+                        <div class="col-12">
+                            <label>Note</label>
+                            <textarea class="form-control"></textarea>
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                <button class="btn btn-success">Update</button>
+            </div>
+
+        </div>
+    </div>
+</div>
