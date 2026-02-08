@@ -1,0 +1,191 @@
+<div class="container-fluid">
+
+    <!-- HEADER -->
+    <nav class="navbar navbar-expand-lg navbar-light py-3 mb-4">
+        <div class="container-fluid">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <button class="btn btn-light fw-semibold" (click)="openAddModal()">
+                        + Add Product
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- DASHBOARD CARDS -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card shadow-sm p-3">
+                <h6 class="fw-semibold text-secondary">Total Products</h6>
+                <h3 class="fw-bold text-primary">{{Counts.productCount}}</h3>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm p-3">
+                <h6 class="fw-semibold text-secondary">Low Stock</h6>
+                <h3 class="fw-bold text-danger">{{Counts.lowstock}}</h3>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm p-3">
+                <h6 class="fw-semibold text-secondary">Out of Stock</h6>
+                <h3 class="fw-bold text-dark">{{Counts.outofstock}}</h3>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm p-3">
+                <h6 class="fw-semibold text-secondary">Active Products</h6>
+                <h3 class="fw-bold text-success">{{Counts.isActive}}</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- PRODUCT TABLE -->
+    <div class="card shadow-sm mb-5">
+        <div class="card-header bg-white py-3 d-flex justify-content-between">
+            <h5 class="fw-bold text-primary mb-0">Manage Medical Products</h5>
+            <input type="search" class="form-control w-25" placeholder="Search product...">
+        </div>
+
+        <div class="table-responsive p-3">
+            <table class="table table-bordered table-hover w-100">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Sr.No</th>
+                        <th>Product Name</th>
+                        <th>Purchase Price</th>
+                        <th>Selling Price</th>
+                        <th>Stock Qty</th>
+                        <th>Status</th>
+                        <th>Description</th>
+                        <th>Created At</th>
+                        <th>Created By</th>
+                        <th>Modified By</th>
+                        <th>Modified At</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let item of products; let i=index">
+                        <td>{{i+1}}</td>
+                        <td>{{item.product_name}}</td>
+                        <td>{{item.purchase_price}}</td>
+                        <td>{{item.product_selling_price}}</td>
+                        <td>{{item.product_stock_quantity}}</td>
+
+                        <td>
+                            <span class="badge" [ngClass]="item.status === 'Available' ? 'bg-success' : 'bg-danger'">
+                                {{item.status}}
+                            </span>
+                        </td>
+
+                        <td>{{item.product_decription}}</td>
+                        <td>{{item.created_at | date:'dd-MM-YYYY'}}</td>
+                        <td>{{item.created_by}}</td>
+                        <td>{{item.modified_by}}</td>
+                        <td>{{item.modified_at | date:'dd-MM-YYYY'}}</td>
+
+                        <td>
+                            <button class="btn btn-sm btn-warning" (click)="updateProduct(item)"><i class="bi bi-pencil-square"></i></button>
+                            <button class="btn btn-sm btn-danger ms-2" (click)="deleteProduct(item.id)"><i class="bi bi-trash-fill"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+    <!-- ADD PRODUCT MODAL -->
+    <div class="modal fade"  id="editModal" >
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title fw-bold">  {{ editId ? 'Update Product' : 'Add New Product' }}</h5>
+                    <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form [formGroup]="productForm">
+
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+                                <label class="fw-semibold">Product Name</label>
+                                <input type="text" class="form-control" formControlName="product_name"
+                                    placeholder="Enter product name">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="fw-semibold">Purchase Price</label>
+                                <input type="number" class="form-control" formControlName="purchase_price"
+                                    placeholder="Enter price">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="fw-semibold">Selling Price</label>
+                                <input type="number" class="form-control" formControlName="product_selling_price"
+                                    placeholder="Enter selling price">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="fw-semibold">Stock Quantity</label>
+                                <input type="number" class="form-control" formControlName="product_stock_quantity"
+                                    placeholder="Enter stock quantity">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="fw-semibold">Created At</label>
+                                <input type="date" class="form-control" formControlName="created_at">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="fw-semibold">Created By</label>
+                                <input type="text" class="form-control" formControlName="created_by">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="fw-semibold">Modified At</label>
+                                <input type="date" class="form-control" formControlName="modified_at">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="fw-semibold">Modified By</label>
+                                <input type="text" class="form-control" formControlName="modified_by">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="fw-semibold">Status</label>
+                                <select class="form-select" formControlName="status">
+                                    <option value="Available">Active</option>
+                                    <option value="Not Available">Inactive</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label class="fw-semibold">Description</label>
+                                <textarea class="form-control" rows="3" formControlName="product_decription"
+                                    placeholder="Enter description"></textarea>
+                            </div>
+
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-primary"  (click)="editId ? saveUpdate() : addProducts()"> {{ editId ? 'Update' : 'Save' }}</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
